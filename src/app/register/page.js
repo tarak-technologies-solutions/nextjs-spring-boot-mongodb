@@ -10,7 +10,9 @@ const CreateUser = () => {
     const [user,setUser] = useState({
         name : "",
         surename: "",
+        avatar: "",
         email: "",
+        password: "",
         profession: ""
     })
 
@@ -20,6 +22,22 @@ const CreateUser = () => {
             [e.target.name] : e.target.value
         })
     }
+
+    const handleChangeAvatar = (e) => {
+        const imageFile = e.target.files[0];
+
+        if (imageFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result;
+                setUser({
+                    ...user,
+                    avatar : base64String,
+                });
+            }
+            reader.readAsDataURL(imageFile);
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,20 +58,40 @@ const CreateUser = () => {
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div>
-                                        <label className="mb-1">Name</label>
-                                        <input name="name" className="form-control" type="text" required onChange={handleChange}/>
+                                        <label className="mb-1" htmlFor="name">Name</label>
+                                        <input name="name" className="form-control" type="text" 
+                                        autoComplete="off"
+                                        required onChange={handleChange}/>
                                     </div>
                                     <div>
                                         <label className="mb-1">Surename</label>
-                                        <input name="surename" className="form-control" type="text" required onChange={handleChange}/>
+                                        <input name="surename" className="form-control" type="text" 
+                                        autoComplete="off"
+                                        required onChange={handleChange}/>
+                                    </div>
+                                    <div>
+                                        <label className="mb-1">Photo</label>
+                                        <input name="avatar" className="form-control" type="file" 
+                                        autoComplete="off"
+                                        required onChange={handleChangeAvatar}/>
                                     </div>
                                     <div>
                                         <label className="mb-1">Email</label>
-                                        <input name="email" className="form-control" type="text"  required onChange={handleChange}/>
+                                        <input name="email" className="form-control" type="text"  
+                                        autoComplete="off"
+                                        required onChange={handleChange}/>
+                                    </div>
+                                    <div>
+                                        <label className="mb-1">Password</label>
+                                        <input name="password" className="form-control" type="password"  
+                                        autoComplete="off"
+                                        required onChange={handleChange}/>
                                     </div>
                                     <div>
                                         <label className="mb-1">Profession</label>
-                                        <input name="profession" className="form-control" type="text" required onChange={handleChange}/>
+                                        <input name="profession" className="form-control" type="text" 
+                                        autoComplete="off"
+                                        required onChange={handleChange}/>
                                     </div>
                                     <div className="mt-2">
                                         <button type ="submit" className="btn btn-dark btn-sm">Subimt</button>
